@@ -1,6 +1,6 @@
 {
     "name": "intaro/pinba-bundle",
-    "description": "Send time profiles about Doctrine, Twig, Memcache to pinba",
+    "description": "Collects and sends execution time of Doctrine queries, Twig renders and Memcache requests as pinba timers to pinba server",
     "keywords": ["symfony2", "pinba", "php"],
     "type": "symfony-bundle",
     "license": "MIT",
