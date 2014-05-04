@@ -1,0 +1,24 @@
+parameters:
+    intaro_pinba.stopwatch.class: Intaro\PinbaBundle\Stopwatch\Stopwatch
+    intaro_pinba.templating.engine.twig.class: Intaro\PinbaBundle\Twig\TimedTwigEngine
+    intaro_pinba.dbal.logger.class: Intaro\PinbaBundle\Logger\DbalLogger
+
+services:
+    intaro_pinba.stopwatch:
+        class: %intaro_pinba.stopwatch.class%
+
+    templating.engine.twig:
+        class: %intaro_pinba.templating.engine.twig.class%
+        public: false
+        arguments:
+            - "@twig"
+            - "@templating.name_parser"
+            - "@templating.locator"
+            - "@intaro_pinba.stopwatch"
+            - "@templating.globals"
+
+    doctrine.dbal.logger:
+        class: %intaro_pinba.dbal.logger.class%
+        public: false
+        arguments:
+            - "@intaro_pinba.stopwatch"
