@@ -1,9 +1,15 @@
 parameters:
+    intaro_pinba.script_name_configure.class: Intaro\PinbaBundle\EventListener\ScriptNameConfigureListener
     intaro_pinba.stopwatch.class: Intaro\PinbaBundle\Stopwatch\Stopwatch
     intaro_pinba.templating.engine.twig.class: Intaro\PinbaBundle\Twig\TimedTwigEngine
     intaro_pinba.dbal.logger.class: Intaro\PinbaBundle\Logger\DbalLogger
 
 services:
+    intaro_pinba.script_name_configure.listener:
+        class: %intaro_pinba.script_name_configure.class%
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onRequest }
+
     intaro_pinba.stopwatch:
         class: %intaro_pinba.stopwatch.class%
 
