@@ -68,7 +68,6 @@ Edit `app/config/config_prod.yml` and add this lines:
 doctrine:
     dbal:
         logging: true
-
 ```
 
 Don't worry. This config enables pinba logger which collects only queries execution time but not logs them.
@@ -111,5 +110,4 @@ doctrine:
                result_cache_driver:
                    type: service
                    id:   doctrine.result.memcache
-
 ```
