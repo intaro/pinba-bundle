@@ -15,12 +15,12 @@ class Stopwatch
             ;
     }
 
-    public function start($tags)
+    public function start(array $tags)
     {
         return new StopwatchEvent($this->enabled ? pinba_timer_start($tags) : null);
     }
 
-    public function add($tags, $time)
+    public function add(array $tags, $time)
     {
         if (!$this->enabled)
             return;
