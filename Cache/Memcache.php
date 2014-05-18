@@ -14,7 +14,10 @@ class Memcache extends \Memcache
 
     public function getStopwatchEvent($methodName)
     {
-        $tags = array('group' => 'memcache::' . $methodName);
+        $v = explode('::', $methodName);
+        if (sizeof($v) > 1) {
+            $tags = array('group' => 'memcache::' . $v[1]);
+        }
 
         return $this->stopwatch->start($tags);
     }
