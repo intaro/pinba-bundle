@@ -47,8 +47,7 @@ class TimedTwigEngine extends TwigEngine
     public function render($name, array $parameters = array())
     {
         $e = $this->stopwatch->start(array(
-            'template' => (string) $name,
-            'category' => 'template',
+            'group' => 'template::' . (string) $name,
         ));
 
         $ret = parent::render($name, $parameters);
