@@ -10,14 +10,11 @@ class Memcache extends \Memcache
 
     public function addWatchedServer(
         $host,
-        $port = 11211,
-        $persistent = true,
-        $weight = null,
-        $timeout = 1
+        $port = 11211
     ) {
-        $this->serverName = $host . ':' . $port;
+        $this->serverName = $host . ($port == 11211 ? '' : ':' . $port);
 
-        $this->addServer($host, $port, $persistent, $weight, $timeout);
+        $this->addServer($host, $port);
     }
 
     public function setStopwatch(Stopwatch $stopwatch)
