@@ -6,6 +6,19 @@ use Intaro\PinbaBundle\Stopwatch\Stopwatch;
 class Memcache extends \Memcache
 {
     protected $stopwatch;
+    protected $serverName;
+
+    public function addWatchedServer(
+        $host,
+        $port = 11211,
+        $persistent = true,
+        $weight = null,
+        $timeout = 1
+    ) {
+        $this->serverName = $host . ':' . $port;
+
+        $this->addServer($host, $port, $persistent, $weight, $timeout);
+    }
 
     public function setStopwatch(Stopwatch $stopwatch)
     {
@@ -14,9 +27,15 @@ class Memcache extends \Memcache
 
     public function getStopwatchEvent($methodName)
     {
+        $tags = array();
+
         $v = explode('::', $methodName);
         if (sizeof($v) > 1) {
-            $tags = array('group' => 'memcache::' . $v[1]);
+            $tags['group'] = 'memcache::' . $v[1];
+        }
+
+        if ($this->serverName) {
+            $tags['server'] = $this->serverName;
         }
 
         return $this->stopwatch->start($tags);
