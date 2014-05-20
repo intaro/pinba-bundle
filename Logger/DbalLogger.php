@@ -31,7 +31,7 @@ class DbalLogger implements SQLLogger
     public function startQuery($sql, array $params = null, array $types = null)
     {
         if (null !== $this->stopwatch) {
-            $tags = array();
+            $tags = array('category' => 'doctrine');
 
             if (preg_match('/^\s*(\w+)\s/u', $sql, $matches)) {
                 $tags['group'] = 'doctrine::' . strtolower($matches[1]);
@@ -39,6 +39,7 @@ class DbalLogger implements SQLLogger
             else {
                 $tags['group'] = 'doctrine::';
             }
+
             $this->stopwatchEvent = $this->stopwatch->start($tags);
         }
     }

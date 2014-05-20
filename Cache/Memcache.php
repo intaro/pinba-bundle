@@ -31,11 +31,8 @@ class Memcache extends \Memcache
     protected function getStopwatchEvent($methodName)
     {
         $tags = $this->stopwatchAdditionalTags;
-
-        $v = explode('::', $methodName);
-        if (sizeof($v) > 1) {
-            $tags['group'] = 'memcache::' . $v[1];
-        }
+        $tags['category'] = 'memcache';
+        $tags['group'] = 'memcache::' . $methodName;
 
         if ($this->serverName) {
             $tags['server'] = $this->serverName;
@@ -47,7 +44,7 @@ class Memcache extends \Memcache
     public function add($key, $var, $flag = null, $expire = null)
     {
         if ($this->stopwatch) {
-            $e = $this->getStopwatchEvent(__METHOD__);
+            $e = $this->getStopwatchEvent('add');
         }
 
         $result = parent::add($key, $var, $flag, $expire);
@@ -62,7 +59,7 @@ class Memcache extends \Memcache
     public function set($key, $var, $flag = null, $expire = null)
     {
         if ($this->stopwatch) {
-            $e = $this->getStopwatchEvent(__METHOD__);
+            $e = $this->getStopwatchEvent('set');
         }
 
         $result = parent::set($key, $var, $flag, $expire);
@@ -77,7 +74,7 @@ class Memcache extends \Memcache
     public function replace($key, $var, $flag = null, $expire = null)
     {
         if ($this->stopwatch) {
-            $e = $this->getStopwatchEvent(__METHOD__);
+            $e = $this->getStopwatchEvent('replace');
         }
 
         $result = parent::replace($key, $var, $flag, $expire);
@@ -92,7 +89,7 @@ class Memcache extends \Memcache
     public function get($key, &$flags = null)
     {
         if ($this->stopwatch) {
-            $e = $this->getStopwatchEvent(__METHOD__);
+            $e = $this->getStopwatchEvent('get');
         }
 
         $result = parent::get($key, $flags);
@@ -107,7 +104,7 @@ class Memcache extends \Memcache
     public function delete($key)
     {
         if ($this->stopwatch) {
-            $e = $this->getStopwatchEvent(__METHOD__);
+            $e = $this->getStopwatchEvent('delete');
         }
 
         $result = parent::delete($key);
@@ -125,7 +122,7 @@ class Memcache extends \Memcache
     public function tag_add($tag, $key)
     {
         if ($this->stopwatch) {
-            $e = $this->getStopwatchEvent(__METHOD__);
+            $e = $this->getStopwatchEvent('tag_add');
         }
 
         $result = parent::tag_add($tag, $key);
@@ -140,7 +137,7 @@ class Memcache extends \Memcache
     public function tag_delete($tag)
     {
         if ($this->stopwatch) {
-            $e = $this->getStopwatchEvent(__METHOD__);
+            $e = $this->getStopwatchEvent('tag_delete');
         }
 
         $result = parent::tag_delete($tag);
@@ -155,7 +152,7 @@ class Memcache extends \Memcache
     public function tags_delete($tags)
     {
         if ($this->stopwatch) {
-            $e = $this->getStopwatchEvent(__METHOD__);
+            $e = $this->getStopwatchEvent('tags_delete');
         }
 
         $result = parent::tags_delete($tags);
