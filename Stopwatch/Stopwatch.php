@@ -30,7 +30,15 @@ class Stopwatch
 
     public function start(array $tags)
     {
-        $tags = array_merge($this->initTags, $tags);
+        if ($this->enabled) {
+            $tags = array_merge($this->initTags, $tags);
+            if (isset($tags['group']) && !isset($tags['category']) && strpos($tags['group'], '::') !== false) {
+                $v = explode('::', $tags['group']);
+                if (sizeof($v) > 0) {
+                    $tags['category'] = $v[0];
+                }
+            }
+        }
 
         return new StopwatchEvent($this->enabled ? pinba_timer_start($tags) : null);
     }

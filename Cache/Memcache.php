@@ -31,7 +31,6 @@ class Memcache extends \Memcache
     protected function getStopwatchEvent($methodName)
     {
         $tags = $this->stopwatchAdditionalTags;
-        $tags['category'] = 'memcache';
         $tags['group'] = 'memcache::' . $methodName;
 
         if ($this->serverName) {
