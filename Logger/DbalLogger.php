@@ -13,6 +13,7 @@ use Doctrine\DBAL\Logging\SQLLogger;
 class DbalLogger implements SQLLogger
 {
     protected $stopwatch;
+    protected $databaseHost;
     protected $stopwatchEvent;
 
     /**
@@ -20,9 +21,10 @@ class DbalLogger implements SQLLogger
      *
      * @param Stopwatch $stopwatch A Stopwatch instance
      */
-    public function __construct(Stopwatch $stopwatch = null)
+    public function __construct(Stopwatch $stopwatch = null, $host)
     {
         $this->stopwatch = $stopwatch;
+        $this->databaseHost = $host;
     }
 
     /**
@@ -31,7 +33,9 @@ class DbalLogger implements SQLLogger
     public function startQuery($sql, array $params = null, array $types = null)
     {
         if (null !== $this->stopwatch) {
-            $tags = array();
+            $tags = array(
+                'server' => $this->databaseHost ?: $_SERVER['HOSTNAME'],
+            );
 
             if (preg_match('/^\s*(\w+)\s/u', $sql, $matches)) {
                 $tags['group'] = 'doctrine::' . strtolower($matches[1]);

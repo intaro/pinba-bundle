@@ -18,11 +18,16 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('intaro_pinba');
-
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $treeBuilder
+            ->root('intaro_pinba')
+            ->children()
+                ->arrayNode('doctrine')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('database_host')->defaultValue(null)->end()
+                    ->end()
+                ->end()
+            ->end();
 
         return $treeBuilder;
     }

@@ -28,3 +28,4 @@ services:
         public: false
         arguments:
             - "@intaro_pinba.stopwatch"
+            - "%intaro_pinba.doctrine.database_host%"
