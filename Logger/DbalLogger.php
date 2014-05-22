@@ -21,7 +21,7 @@ class DbalLogger implements SQLLogger
      *
      * @param Stopwatch $stopwatch A Stopwatch instance
      */
-    public function __construct(Stopwatch $stopwatch = null, $host)
+    public function __construct(Stopwatch $stopwatch = null, $host = null)
     {
         $this->stopwatch = $stopwatch;
         $this->databaseHost = $host;
