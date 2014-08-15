@@ -34,7 +34,7 @@ class DbalLogger implements SQLLogger
     {
         if (null !== $this->stopwatch) {
             $tags = array(
-                'server' => $this->databaseHost ?: $_SERVER['HOSTNAME'],
+                'server' => $this->databaseHost ?: (isset($_SERVER['HOSTNAME']) ? $_SERVER['HOSTNAME'] : ''),
             );
 
             if (preg_match('/^\s*(\w+)\s/u', $sql, $matches)) {
