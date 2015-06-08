@@ -21,7 +21,7 @@ Require the bundle in your `composer.json` file:
 ````json
 {
     "require": {
-        "intaro/pinba-bundle": "0.3",
+        "intaro/pinba-bundle": "~0.4.2",
     }
 }
 ```
