@@ -74,7 +74,7 @@ Don't worry. This config enables pinba logger which collects only queries execut
 
 ### Collecting Memcache metrics ###
 
-PinbaBundle supplies Memcache wrapped class `Intaro\PinbaBundle\Cache\Memcache` which collects execution times of all memcache quiries.
+PinbaBundle supplies Memcache wrapped class `Intaro\PinbaBundle\Cache\Memcache` which collects execution times of all memcache queries.
 
 Example of `app/config/config_prod.yml`:
 ```yml
