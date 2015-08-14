@@ -21,7 +21,6 @@ services:
             - "@templating.name_parser"
             - "@templating.locator"
             - "@intaro_pinba.stopwatch"
-            - "@templating.globals"
 
     doctrine.dbal.logger:
         class: %intaro_pinba.dbal.logger.class%
