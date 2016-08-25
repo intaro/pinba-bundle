@@ -6,25 +6,25 @@ parameters:
 
 services:
     intaro_pinba.script_name_configure.listener:
-        class: "%intaro_pinba.script_name_configure.class%"
+        class: '%intaro_pinba.script_name_configure.class%'
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onRequest }
 
     intaro_pinba.stopwatch:
-        class: "%intaro_pinba.stopwatch.class%"
+        class: '%intaro_pinba.stopwatch.class%'
 
     templating.engine.twig:
-        class: "%intaro_pinba.templating.engine.twig.class%"
+        class: '%intaro_pinba.templating.engine.twig.class%'
         public: false
         arguments:
-            - "@twig"
-            - "@templating.name_parser"
-            - "@templating.locator"
-            - "@intaro_pinba.stopwatch"
+            - '@twig'
+            - '@templating.name_parser'
+            - '@templating.locator'
+            - '@intaro_pinba.stopwatch'
 
     doctrine.dbal.logger:
-        class: "%intaro_pinba.dbal.logger.class%"
+        class: '%intaro_pinba.dbal.logger.class%'
         public: false
         arguments:
-            - "@intaro_pinba.stopwatch"
-            - "%intaro_pinba.doctrine.database_host%"
+            - '@intaro_pinba.stopwatch'
+            - '%intaro_pinba.doctrine.database_host%'
