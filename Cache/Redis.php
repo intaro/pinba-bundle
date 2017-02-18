@@ -116,6 +116,51 @@ class Redis extends \Redis
         return $result;
     }
 
+    public function mSetNx($v)
+    {
+        if ($this->stopwatch) {
+            $e = $this->getStopwatchEvent('mSetNx');
+        }
+
+        $result = parent::mSetNx($v);
+
+        if ($this->stopwatch) {
+            $e->stop();
+        }
+
+        return $result;
+    }
+
+    public function expire($key, $expire)
+    {
+        if ($this->stopwatch) {
+            $e = $this->getStopwatchEvent('expire');
+        }
+
+        $result = parent::expire($key, $expire);
+
+        if ($this->stopwatch) {
+            $e->stop();
+        }
+
+        return $result;
+    }
+
+    public function exec()
+    {
+        if ($this->stopwatch) {
+            $e = $this->getStopwatchEvent('exec');
+        }
+
+        $result = parent::exec();
+
+        if ($this->stopwatch) {
+            $e->stop();
+        }
+
+        return $result;
+    }
+
     public function delete($key)
     {
         if ($this->stopwatch) {
