@@ -18,7 +18,7 @@ PinbaBundle requires Symfony 2.1 or higher.
 
 Require the bundle in your `composer.json` file:
 
-````json
+```json
 {
     "require": {
         "intaro/pinba-bundle": "~0.4.2",
