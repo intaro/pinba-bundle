@@ -9,13 +9,7 @@ class Stopwatch
 
     public function __construct()
     {
-        $this->enabled =
-            function_exists('pinba_timer_start') &&
-            function_exists('pinba_timer_stop') &&
-            function_exists('pinba_timer_add') &&
-            function_exists('pinba_get_info')
-            ;
-
+        $this->enable();
         if ($this->enabled) {
             $pinbaData = pinba_get_info();
 
@@ -26,6 +20,21 @@ class Stopwatch
                 $this->initTags['__server_name'] = $pinbaData['server_name'];
             }
         }
+    }
+
+    public function enable()
+    {
+        $this->enabled =
+            function_exists('pinba_timer_start') &&
+            function_exists('pinba_timer_stop') &&
+            function_exists('pinba_timer_add') &&
+            function_exists('pinba_get_info')
+            ;
+    }
+
+    public function disable()
+    {
+        $this->enabled = false;
     }
 
     public function start(array $tags)
