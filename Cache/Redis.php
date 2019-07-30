@@ -71,13 +71,13 @@ class Redis extends \Redis
         return $result;
     }
 
-    public function exists($key)
+    public function exists($key, ...$other_keys)
     {
         if ($this->stopwatch) {
             $e = $this->getStopwatchEvent('exists');
         }
 
-        $result = parent::exists($key);
+        $result = parent::exists($key, ...$other_keys);
 
         if ($this->stopwatch) {
             $e->stop();
@@ -86,13 +86,13 @@ class Redis extends \Redis
         return $result;
     }
 
-    public function set($key, $var)
+    public function set($key, $var, $opts = null)
     {
         if ($this->stopwatch) {
             $e = $this->getStopwatchEvent('set');
         }
 
-        $result = parent::set($key, $var);
+        $result = parent::set($key, $var, $opts);
 
         if ($this->stopwatch) {
             $e->stop();
@@ -161,13 +161,13 @@ class Redis extends \Redis
         return $result;
     }
 
-    public function delete($key)
+    public function delete($key, ...$other_keys)
     {
         if ($this->stopwatch) {
             $e = $this->getStopwatchEvent('delete');
         }
 
-        $result = parent::delete($key);
+        $result = parent::delete($key, ...$other_keys);
 
         if ($this->stopwatch) {
             $e->stop();
