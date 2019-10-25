@@ -17,9 +17,15 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $treeBuilder
-            ->root('intaro_pinba')
+        $treeBuilder = new TreeBuilder('intaro_pinba');
+        if (\method_exists($treeBuilder, 'getRootNode')) {
+            $rootNode = $treeBuilder->getRootNode();
+        } else {
+            // BC layer for symfony/config 4.1 and older
+            $rootNode = $treeBuilder->root('intaro_pinba');
+        }
+
+        $rootNode
             ->children()
                 ->arrayNode('doctrine')
                     ->addDefaultsIfNotSet()
