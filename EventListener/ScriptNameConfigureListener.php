@@ -3,18 +3,23 @@
 namespace Intaro\PinbaBundle\EventListener;
 
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
-use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpKernel\Event\KernelEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 class ScriptNameConfigureListener
 {
-    public function onRequest(GetResponseEvent $event)
+    public function onRequest(KernelEvent $event)
     {
+        if (!($event instanceof GetResponseEvent || $event instanceof RequestEvent)) {
+            throw new \InvalidArgumentException('Event must be GetResponseEvent or RequestEvent');
+        }
+
         if (HttpKernelInterface::MASTER_REQUEST !== $event->getRequestType()) {
             return;
         }
 
-        if (!function_exists('pinba_script_name_set') || PHP_SAPI === 'cli') {
+        if (!function_exists('pinba_script_name_set') || \PHP_SAPI === 'cli') {
             return;
         }
 
