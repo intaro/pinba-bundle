@@ -17,5 +17,8 @@
             "Intaro\\PinbaBundle\\": ""
         }
     },
-    "target-dir" : "Intaro/PinbaBundle"
+    "target-dir" : "Intaro/PinbaBundle",
+    "require-dev": {
+        "symfony/twig-bundle": "^4.4"
+    }
 }
