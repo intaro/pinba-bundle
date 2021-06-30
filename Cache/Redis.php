@@ -12,11 +12,13 @@ class Redis extends \Redis
     public function addWatchedServer(
         $host,
         $port = 6379,
-        $timeout = 5
+        $connectTimeout = 5,
+        $retryTimeout = 100,
+        $readTimeout = 5
     ) {
         $this->serverName = $host . ($port == 6379 ? '' : ':' . $port);
 
-        $this->pconnect($host, $port, $timeout);
+        $this->pconnect($host, $port, $connectTimeout, null, $retryTimeout, $readTimeout);
     }
 
     public function setStopwatch(Stopwatch $stopwatch)
