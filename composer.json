@@ -8,14 +8,17 @@
         "name" : "Ilyas Salikhov"
     }],
     "require": {
-        "php": ">=5.3.0",
-        "symfony/framework-bundle" : "~2.8|~3.0|^4.0|^5.0",
-        "symfony/yaml": "~2.8|~3.0|^4.0|^5.0"
+        "php": "^7.2",
+        "symfony/framework-bundle" : "^4.4",
+        "symfony/yaml": "^4.4"
+    },
+    "suggest": {
+        "twig/twig": "^2.0",
+        "symfony/twig-bundle": "^4.4"
     },
     "autoload": {
-        "psr-0": {
+        "psr-4": {
             "Intaro\\PinbaBundle\\": ""
         }
-    },
-    "target-dir" : "Intaro/PinbaBundle"
+    }
 }

@@ -2,7 +2,6 @@
 
 namespace Intaro\PinbaBundle\EventListener;
 
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\Event\KernelEvent;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
@@ -11,7 +10,7 @@ class ScriptNameConfigureListener
 {
     public function onRequest(KernelEvent $event)
     {
-        if (!($event instanceof GetResponseEvent || $event instanceof RequestEvent)) {
+        if (!($event instanceof RequestEvent)) {
             throw new \InvalidArgumentException('Event must be GetResponseEvent or RequestEvent');
         }
 
