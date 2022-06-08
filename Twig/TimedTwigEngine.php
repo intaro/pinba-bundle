@@ -27,12 +27,12 @@ class TimedTwigEngine extends TwigEngine
     /**
      * Constructor.
      *
-     * @param \Twig_Environment           $environment A \Twig_Environment instance
+     * @param \Twig\Environment           $environment A \Twig\Environment instance
      * @param TemplateNameParserInterface $parser      A TemplateNameParserInterface instance
      * @param FileLocatorInterface        $locator     A FileLocatorInterface instance
      * @param Stopwatch                   $stopwatch   A Stopwatch instance
      */
-    public function __construct(\Twig_Environment $environment, TemplateNameParserInterface $parser, FileLocatorInterface $locator, Stopwatch $stopwatch)
+    public function __construct(\Twig\Environment $environment, TemplateNameParserInterface $parser, FileLocatorInterface $locator, Stopwatch $stopwatch)
     {
         parent::__construct($environment, $parser, $locator);
 
