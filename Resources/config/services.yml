@@ -1,29 +1,33 @@
-parameters:
-    intaro_pinba.script_name_configure.class: Intaro\PinbaBundle\EventListener\ScriptNameConfigureListener
-    intaro_pinba.stopwatch.class: Intaro\PinbaBundle\Stopwatch\Stopwatch
-    intaro_pinba.templating.engine.twig.class: Intaro\PinbaBundle\Twig\TimedTwigEngine
-    intaro_pinba.dbal.logger.class: Intaro\PinbaBundle\Logger\DbalLogger
-
 services:
-    intaro_pinba.script_name_configure.listener:
-        class: "%intaro_pinba.script_name_configure.class%"
+    _defaults:
+        public: false
+        autowire: true
+        autoconfigure: true
+
+    intaro_pinba.stopwatch:
+        class: Intaro\PinbaBundle\Stopwatch\Stopwatch
+
+    Intaro\PinbaBundle\Stopwatch\Stopwatch: '@intaro_pinba.stopwatch'
+
+    Intaro\PinbaBundle\EventListener\ScriptNameConfigureListener:
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onRequest }
 
-    intaro_pinba.stopwatch:
-        class: "%intaro_pinba.stopwatch.class%"
-
-    templating.engine.twig:
-        class: "%intaro_pinba.templating.engine.twig.class%"
-        public: false
+    twig:
+        class: Intaro\PinbaBundle\Twig\EnvironmentDecorating
+        public: true
+        configurator: ['@twig.configurator.environment', 'configure']
         arguments:
-            - "@twig"
-            - "@templating.name_parser"
-            - "@templating.locator"
-            - "@intaro_pinba.stopwatch"
+            $loader: '@twig.loader'
+            $stopwatch: '@intaro_pinba.stopwatch'
+        calls:
+            - [ addRuntimeLoader, ["@twig.runtime_loader"] ]
+            - [ addGlobal, ["app", "@twig.app_variable"] ]
+
+    Twig\Environment: '@twig'
 
     doctrine.dbal.logger:
-        class: "%intaro_pinba.dbal.logger.class%"
+        class: Intaro\PinbaBundle\Logger\DbalLogger
         public: false
         arguments:
             - "@intaro_pinba.stopwatch"
