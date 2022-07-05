@@ -2,6 +2,8 @@
 
 namespace Intaro\PinbaBundle\Tests;
 
+use Intaro\PinbaBundle\IntaroPinbaBundle;
+use Intaro\PinbaBundle\Tests\fixtures\FixtureBundle;
 use Nyholm\BundleTest\TestKernel;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -16,7 +18,7 @@ class BundleInitializationTest extends KernelTestCase
     protected static function createKernel(array $options = []): KernelInterface
     {
         $kernel = parent::createKernel($options);
-        $kernel->addTestBundle(IntaroTwigSandboxBundle::class);
+        $kernel->addTestBundle(IntaroPinbaBundle::class);
         $kernel->addTestBundle(FixtureBundle::class);
         $kernel->handleOptions($options);
 

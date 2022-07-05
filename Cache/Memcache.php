@@ -1,4 +1,5 @@
 <?php
+
 namespace Intaro\PinbaBundle\Cache;
 
 use Intaro\PinbaBundle\Stopwatch\Stopwatch;
@@ -6,24 +7,24 @@ use Intaro\PinbaBundle\Stopwatch\Stopwatch;
 class Memcache extends \Memcache
 {
     protected $stopwatch;
-    protected $stopwatchAdditionalTags = array();
+    protected $stopwatchAdditionalTags = [];
     protected $serverName;
 
     public function addWatchedServer(
         $host,
         $port = 11211
-    ) {
-        $this->serverName = $host . ($port == 11211 ? '' : ':' . $port);
+    ): void {
+        $this->serverName = $host . (11211 == $port ? '' : ':' . $port);
 
         $this->addServer($host, $port);
     }
 
-    public function setStopwatch(Stopwatch $stopwatch)
+    public function setStopwatch(Stopwatch $stopwatch): void
     {
         $this->stopwatch = $stopwatch;
     }
 
-    public function setStopwatchTags(array $tags)
+    public function setStopwatchTags(array $tags): void
     {
         $this->stopwatchAdditionalTags = $tags;
     }

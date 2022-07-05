@@ -2,13 +2,11 @@
 
 namespace Intaro\PinbaBundle\Logger;
 
-use Symfony\Component\HttpKernel\Log\LoggerInterface;
-use Intaro\PinbaBundle\Stopwatch\Stopwatch;
 use Doctrine\DBAL\Logging\SQLLogger;
+use Intaro\PinbaBundle\Stopwatch\Stopwatch;
 
 /**
  * DbalLogger.
- *
  */
 class DbalLogger implements SQLLogger
 {
@@ -30,17 +28,16 @@ class DbalLogger implements SQLLogger
     /**
      * {@inheritdoc}
      */
-    public function startQuery($sql, array $params = null, array $types = null)
+    public function startQuery($sql, array $params = null, array $types = null): void
     {
         if (null !== $this->stopwatch) {
-            $tags = array(
-                'server' => $this->databaseHost ?: (isset($_SERVER['HOSTNAME']) ? $_SERVER['HOSTNAME'] : ''),
-            );
+            $tags = [
+                'server' => $this->databaseHost ?: ($_SERVER['HOSTNAME'] ?? ''),
+            ];
 
             if (preg_match('/^\s*(\w+)\s/u', $sql, $matches)) {
                 $tags['group'] = 'doctrine::' . strtolower($matches[1]);
-            }
-            else {
+            } else {
                 $tags['group'] = 'doctrine::';
             }
 
@@ -51,7 +48,7 @@ class DbalLogger implements SQLLogger
     /**
      * {@inheritdoc}
      */
-    public function stopQuery()
+    public function stopQuery(): void
     {
         if (null !== $this->stopwatchEvent) {
             $this->stopwatchEvent->stop();

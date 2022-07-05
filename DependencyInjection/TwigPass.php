@@ -22,5 +22,4 @@ class TwigPass implements CompilerPassInterface
             $definition->addArgument(new Reference('intaro_pinba.stopwatch'));
         }
     }
-
 }

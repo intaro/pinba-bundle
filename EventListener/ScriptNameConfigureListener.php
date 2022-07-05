@@ -9,7 +9,7 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 class ScriptNameConfigureListener
 {
-    public function onRequest(KernelEvent $event)
+    public function onRequest(KernelEvent $event): void
     {
         if (!($event instanceof GetResponseEvent || $event instanceof RequestEvent)) {
             throw new \InvalidArgumentException('Event must be GetResponseEvent or RequestEvent');

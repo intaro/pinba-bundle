@@ -1,4 +1,5 @@
 <?php
+
 namespace Intaro\PinbaBundle\Cache;
 
 use Intaro\PinbaBundle\Stopwatch\Stopwatch;
@@ -6,25 +7,25 @@ use Intaro\PinbaBundle\Stopwatch\Stopwatch;
 class Redis extends \Redis
 {
     protected $stopwatch;
-    protected $stopwatchAdditionalTags = array();
+    protected $stopwatchAdditionalTags = [];
     protected $serverName;
 
     public function addWatchedServer(
         $host,
         $port = 6379,
         $timeout = 5
-    ) {
-        $this->serverName = $host . ($port == 6379 ? '' : ':' . $port);
+    ): void {
+        $this->serverName = $host . (6379 == $port ? '' : ':' . $port);
 
         $this->pconnect($host, $port, $timeout);
     }
 
-    public function setStopwatch(Stopwatch $stopwatch)
+    public function setStopwatch(Stopwatch $stopwatch): void
     {
         $this->stopwatch = $stopwatch;
     }
 
-    public function setStopwatchTags(array $tags)
+    public function setStopwatchTags(array $tags): void
     {
         $this->stopwatchAdditionalTags = $tags;
     }

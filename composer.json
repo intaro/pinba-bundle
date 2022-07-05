@@ -14,8 +14,6 @@
     },
     "require-dev": {
         "nyholm/symfony-bundle-test": "^2.0",
-        "phpstan/phpstan": "^1.0",
-        "phpstan/phpstan-symfony": "^1.0",
         "phpunit/phpunit": "^8.5",
         "symfony/phpunit-bridge": "^5.0",
         "psr/log": "~1.0",
@@ -32,9 +30,6 @@
         }
     },
     "scripts": {
-        "static-analysis": [
-            "phpstan analyse --ansi --memory-limit=1G"
-        ],
         "phpcs": [
             "vendor/bin/php-cs-fixer fix --dry-run --config=.php-cs-fixer.dist.php --using-cache=no --show-progress=none -v"
         ],

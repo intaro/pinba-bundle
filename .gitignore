@@ -12,3 +12,5 @@ vendor
 /.idea
 /.idea/*
 .travis.yml
+
+.php_cs.cache
