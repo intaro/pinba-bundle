@@ -14,14 +14,14 @@ Also PinbaBundle changes pinba `script_name` variable to `request_uri` value oth
 
 ## Installation ##
 
-PinbaBundle requires Symfony 2.1 or higher.
+PinbaBundle requires Symfony 4.4 or higher.
 
 Require the bundle in your `composer.json` file:
 
 ```json
 {
     "require": {
-        "intaro/pinba-bundle": "~0.4.2",
+        "intaro/pinba-bundle": "^2.0",
     }
 }
 ```
@@ -33,9 +33,9 @@ Require the bundle in your `composer.json` file:
 
 public function registerBundles()
 {
-    $bundles = array(
+    $bundles = [
         //...
-    );
+    ];
 
     if ('prod' === $this->environment) {
         $bundles[] = new Intaro\PinbaBundle\IntaroPinbaBundle();
