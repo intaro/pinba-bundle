@@ -1,4 +1,5 @@
 # PinbaBundle #
+![CI](https://github.com/intaro/pinba-bundle/workflows/CI/badge.svg?branch=master)
 
 ## About ##
 
