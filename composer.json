@@ -9,12 +9,36 @@
     }],
     "require": {
         "php": ">=7.4",
-        "symfony/framework-bundle" : "~2.8|~3.0|^4.0|^5.0",
-        "symfony/yaml": "~2.8|~3.0|^4.0|^5.0"
+        "symfony/framework-bundle" : "^4.0|^5.0",
+        "symfony/yaml": "^4.0|^5.0"
+    },
+    "require-dev": {
+        "nyholm/symfony-bundle-test": "^2.0",
+        "phpstan/phpstan": "^1.0",
+        "phpstan/phpstan-symfony": "^1.0",
+        "phpunit/phpunit": "^8.5",
+        "symfony/phpunit-bridge": "^5.0",
+        "psr/log": "~1.0",
+        "friendsofphp/php-cs-fixer": "3.4"
     },
     "autoload": {
         "psr-4": {
             "Intaro\\PinbaBundle\\": ""
         }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Intaro\\PinbaBundle\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "static-analysis": [
+            "phpstan analyse --ansi --memory-limit=1G"
+        ],
+        "phpcs": [
+            "vendor/bin/php-cs-fixer fix --dry-run --config=.php-cs-fixer.dist.php --using-cache=no --show-progress=none -v"
+        ],
+        "docker-clean": "docker image rm $(docker image ls -qf reference=pinba-bundle-test)",
+        "docker": "docker build . -t pinba-bundle-test && docker image prune -f >/dev/null && docker run --rm pinba-bundle-test"
     }
 }
