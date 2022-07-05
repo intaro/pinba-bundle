@@ -1,10 +1,9 @@
-parameters:
-    intaro_pinba.script_name_configure.class: Intaro\PinbaBundle\EventListener\ScriptNameConfigureListener
-    intaro_pinba.stopwatch.class: Intaro\PinbaBundle\Stopwatch\Stopwatch
-    intaro_pinba.templating.engine.twig.class: Intaro\PinbaBundle\Twig\TimedTwigEngine
-    intaro_pinba.dbal.logger.class: Intaro\PinbaBundle\Logger\DbalLogger
-
 services:
+    _defaults:
+        public: false
+        autowire: true
+        autoconfigure: true
+
     intaro_pinba.script_name_configure.listener:
         class: Intaro\PinbaBundle\EventListener\ScriptNameConfigureListener
         tags:
@@ -17,7 +16,7 @@ services:
     Intaro\PinbaBundle\EventListener\ScriptNameConfigureListener: '@intaro_pinba.script_name_configure.listener'
 
     templating.engine.twig:
-        class: "%intaro_pinba.templating.engine.twig.class%"
+        class: Intaro\PinbaBundle\Twig\TimedTwigEngine
         public: false
         arguments:
             - "@twig"
