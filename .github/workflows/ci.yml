@@ -8,6 +8,36 @@ on:
       - master
 
 jobs:
+  tests:
+    runs-on: ubuntu-20.04
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version:
+          - '7.4'
+        symfony-version:
+          - '4.4.*'
+          - '5.4.*'
+        coverage: [ 'none' ]
+    steps:
+      -   name: "Checkout"
+          uses: "actions/checkout@v2"
+
+      -   name: "Install PHP"
+          uses: "shivammathur/setup-php@v2"
+          with:
+            tools: flex
+            php-version: "${{ matrix.php-version }}"
+            coverage: "${{ matrix.coverage }}"
+
+      -   name: "Install dependencies"
+          uses: ramsey/composer-install@v2
+          env:
+            SYMFONY_REQUIRE: "${{ matrix.symfony-version }}"
+
+      -   name: "Run tests"
+          run: composer test
+
   static-analysis:
     runs-on: ubuntu-20.04
     name: "Static analysis"

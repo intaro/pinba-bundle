@@ -2,10 +2,14 @@
 
 namespace Intaro\PinbaBundle\Tests;
 
+use Intaro\PinbaBundle\EventListener\ScriptNameConfigureListener;
 use Intaro\PinbaBundle\IntaroPinbaBundle;
+use Intaro\PinbaBundle\Stopwatch\Stopwatch;
 use Intaro\PinbaBundle\Tests\fixtures\FixtureBundle;
+use Intaro\PinbaBundle\Twig\TimedTwigEnvironment;
 use Nyholm\BundleTest\TestKernel;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Bundle\TwigBundle\TwigBundle;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 class BundleInitializationTest extends KernelTestCase
@@ -20,6 +24,7 @@ class BundleInitializationTest extends KernelTestCase
         $kernel = parent::createKernel($options);
         $kernel->addTestBundle(IntaroPinbaBundle::class);
         $kernel->addTestBundle(FixtureBundle::class);
+        $kernel->addTestBundle(TwigBundle::class);
         $kernel->handleOptions($options);
 
         return $kernel;
@@ -30,87 +35,19 @@ class BundleInitializationTest extends KernelTestCase
         self::bootKernel();
         $container = self::$container;
 
-        $this->assertTrue($container->has(EnvironmentBuilder::class));
-        $this->assertTrue($container->has(\Intaro\TwigSandboxBundle\Builder\EnvironmentBuilder::class));
-        $service = $container->get(EnvironmentBuilder::class);
-        $this->assertInstanceOf(EnvironmentBuilder::class, $service);
+        $this->assertTrue($container->has(Stopwatch::class));
+        $this->assertTrue($container->has('intaro_pinba.stopwatch'));
+        $this->assertTrue($container->has(ScriptNameConfigureListener::class));
+        $this->assertTrue($container->has('intaro_pinba.script_name_configure.listener'));
+
     }
 
-    public function testRender(): void
+    public function testTwigRenderStopwatch()
     {
         self::bootKernel();
         $container = self::$container;
 
-        $twig = $container->get(EnvironmentBuilder::class)->getSandboxEnvironment();
-        $tpl = $twig->createTemplate('Product {{ product.name }}');
-
-        $html = $tpl->render([
-            'product' => $this->getObject(),
-        ]);
-
-        $this->assertEquals('Product Product 1', $html);
-    }
-
-    public function testRenderWithFilter(): void
-    {
-        self::bootKernel();
-        $container = self::$container;
-
-        $twig = $container->get(EnvironmentBuilder::class)->getSandboxEnvironment();
-        $tpl = $twig->createTemplate('Product {{ product.name|lower }}');
-
-        $html = $tpl->render([
-            'product' => $this->getObject(),
-        ]);
-
-        $this->assertEquals('Product product 1', $html);
-    }
-
-    public function testRenderError(): void
-    {
-        $this->expectException(SecurityNotAllowedMethodError::class);
-        $this->expectExceptionMessageMatches('/Calling "getquantity" method on a ".*Product" object is not allowed in/');
-
-        self::bootKernel();
-        $container = self::$container;
-
-        $twig = $container->get(EnvironmentBuilder::class)->getSandboxEnvironment();
-        $tpl = $twig->createTemplate('Product {{ product.quantity }}');
-
-        $tpl->render([
-            'product' => $this->getObject(),
-        ]);
-    }
-
-    public function testRenderWithEmptyConfig(): void
-    {
-        $this->expectException(SecurityNotAllowedFilterError::class);
-        $this->expectExceptionMessageMatches('/Filter "lower" is not allowed in/');
-
-        $kernel = self::bootKernel(['config' => static function (TestKernel $kernel): void {
-            $kernel->addTestBundle(IntaroTwigSandboxBundle::class);
-            $kernel->addTestBundle(FixtureBundle::class);
-
-            $kernel->addTestConfig(__DIR__ . '/fixtures/empty-config.yml');
-        }]);
-
-        $container = self::$container;
-        $twig = $container->get(EnvironmentBuilder::class)->getSandboxEnvironment();
-        $tpl = $twig->createTemplate('Product {{ product.name|lower }}');
-
-        $html = $tpl->render([
-            'product' => $this->getObject(),
-        ]);
-
-        $this->assertEquals('Product product 1', $html);
-    }
-
-    private function getObject(): Product
-    {
-        $product = new Product();
-        $product->setName('Product 1');
-        $product->setQuantity(5);
-
-        return $product;
+        $service = $container->get('twig');
+        $this->assertInstanceOf(TimedTwigEnvironment::class, $service);
     }
 }

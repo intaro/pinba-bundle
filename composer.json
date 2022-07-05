@@ -16,8 +16,10 @@
         "nyholm/symfony-bundle-test": "^2.0",
         "phpunit/phpunit": "^8.5",
         "symfony/phpunit-bridge": "^5.0",
-        "psr/log": "~1.0",
-        "friendsofphp/php-cs-fixer": "3.4"
+        "friendsofphp/php-cs-fixer": "3.4",
+        "twig/twig": "^v2.14",
+        "symfony/twig-bundle": "^4.4",
+        "symfony/twig-bridge": "^4.4"
     },
     "autoload": {
         "psr-4": {
@@ -30,6 +32,7 @@
         }
     },
     "scripts": {
+        "test": "vendor/bin/phpunit --color=always",
         "phpcs": [
             "vendor/bin/php-cs-fixer fix --dry-run --config=.php-cs-fixer.dist.php --using-cache=no --show-progress=none -v"
         ],
