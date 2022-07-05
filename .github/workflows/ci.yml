@@ -36,8 +36,5 @@ jobs:
       - name: "Install dependencies"
         uses: ramsey/composer-install@v2
 
-      - name: "Run static-analysis"
-        run: composer static-analysis
-
       - name: "Run code-style check"
         run: composer phpcs

@@ -8,7 +8,6 @@ use Twig\Loader\LoaderInterface;
 
 class TimedTwigEnvironment extends Environment
 {
-
     private Stopwatch $stopwatch;
 
     public function __construct(LoaderInterface $loader, $options = [], Stopwatch $stopwatch)
@@ -23,11 +22,11 @@ class TimedTwigEnvironment extends Environment
      */
     public function render($name, array $parameters = [])
     {
-        $e = $this->stopwatch->start(array(
+        $e = $this->stopwatch->start([
             'server' => 'localhost',
             'group' => 'twig::render',
             'twig_template' => (string) $name,
-        ));
+        ]);
 
         $ret = parent::render($name, $parameters);
 

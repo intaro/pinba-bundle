@@ -5,7 +5,7 @@ namespace Intaro\PinbaBundle\Stopwatch;
 class Stopwatch
 {
     protected $enabled = false;
-    protected $initTags = array();
+    protected $initTags = [];
 
     public function __construct()
     {
@@ -22,17 +22,17 @@ class Stopwatch
         }
     }
 
-    public function enable()
+    public function enable(): void
     {
         $this->enabled =
-            function_exists('pinba_timer_start') &&
-            function_exists('pinba_timer_stop') &&
-            function_exists('pinba_timer_add') &&
-            function_exists('pinba_get_info')
+            function_exists('pinba_timer_start')
+            && function_exists('pinba_timer_stop')
+            && function_exists('pinba_timer_add')
+            && function_exists('pinba_get_info')
             ;
     }
 
-    public function disable()
+    public function disable(): void
     {
         $this->enabled = false;
     }
@@ -41,9 +41,9 @@ class Stopwatch
     {
         if ($this->enabled) {
             $tags = array_merge($this->initTags, $tags);
-            if (isset($tags['group']) && !isset($tags['category']) && strpos($tags['group'], '::') !== false) {
+            if (isset($tags['group']) && !isset($tags['category']) && false !== strpos($tags['group'], '::')) {
                 $v = explode('::', $tags['group']);
-                if (sizeof($v) > 0) {
+                if (count($v) > 0) {
                     $tags['category'] = $v[0];
                 }
             }
@@ -52,10 +52,11 @@ class Stopwatch
         return new StopwatchEvent($this->enabled ? pinba_timer_start($tags) : null);
     }
 
-    public function add(array $tags, $time)
+    public function add(array $tags, $time): void
     {
-        if (!$this->enabled)
+        if (!$this->enabled) {
             return;
+        }
 
         $tags = array_merge($this->initTags, $tags);
 

@@ -33,7 +33,8 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('database_host')->defaultValue(null)->end()
                     ->end()
                 ->end()
-            ->end();
+            ->end()
+        ;
 
         return $treeBuilder;
     }

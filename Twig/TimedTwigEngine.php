@@ -11,14 +11,13 @@
 
 namespace Intaro\PinbaBundle\Twig;
 
-use Symfony\Bundle\TwigBundle\TwigEngine;
-use Symfony\Component\Templating\TemplateNameParserInterface;
 use Intaro\PinbaBundle\Stopwatch\Stopwatch;
+use Symfony\Bundle\TwigBundle\TwigEngine;
 use Symfony\Component\Config\FileLocatorInterface;
+use Symfony\Component\Templating\TemplateNameParserInterface;
 
 /**
  * Times the time spent to render a template.
- *
  */
 class TimedTwigEngine extends TwigEngine
 {
@@ -42,13 +41,13 @@ class TimedTwigEngine extends TwigEngine
     /**
      * {@inheritdoc}
      */
-    public function render($name, array $parameters = array())
+    public function render($name, array $parameters = [])
     {
-        $e = $this->stopwatch->start(array(
+        $e = $this->stopwatch->start([
             'server' => 'localhost',
             'group' => 'twig::render',
             'twig_template' => (string) $name,
-        ));
+        ]);
 
         $ret = parent::render($name, $parameters);
 
