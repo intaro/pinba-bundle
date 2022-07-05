@@ -39,10 +39,9 @@ class BundleInitializationTest extends KernelTestCase
         $this->assertTrue($container->has('intaro_pinba.stopwatch'));
         $this->assertTrue($container->has(ScriptNameConfigureListener::class));
         $this->assertTrue($container->has('intaro_pinba.script_name_configure.listener'));
-
     }
 
-    public function testTwigRenderStopwatch()
+    public function testTwigRenderStopwatch(): void
     {
         self::bootKernel();
         $container = self::$container;

@@ -9,7 +9,7 @@ $finder = PhpCsFixer\Finder::create()
     ->in(__DIR__ . '/Logger')
     ->in(__DIR__ . '/Stopwatch')
     ->in(__DIR__ . '/Twig')
-//    ->in(__DIR__ . '/tests')
+    ->in(__DIR__ . '/tests')
 ;
 
 $rules = [
