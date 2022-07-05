@@ -20,7 +20,7 @@ class TimedTwigEnvironment extends Environment
     /**
      * {@inheritdoc}
      */
-    public function render($name, array $parameters = [])
+    public function render($name, array $parameters = []): string
     {
         $e = $this->stopwatch->start([
             'server' => 'localhost',
