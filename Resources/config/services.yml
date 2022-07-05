@@ -6,12 +6,15 @@ parameters:
 
 services:
     intaro_pinba.script_name_configure.listener:
-        class: "%intaro_pinba.script_name_configure.class%"
+        class: Intaro\PinbaBundle\EventListener\ScriptNameConfigureListener
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onRequest }
 
     intaro_pinba.stopwatch:
-        class: "%intaro_pinba.stopwatch.class%"
+        class: Intaro\PinbaBundle\Stopwatch\Stopwatch
+
+    Intaro\PinbaBundle\Stopwatch\Stopwatch: '@intaro_pinba.stopwatch'
+    Intaro\PinbaBundle\EventListener\ScriptNameConfigureListener: '@intaro_pinba.script_name_configure.listener'
 
     templating.engine.twig:
         class: "%intaro_pinba.templating.engine.twig.class%"
@@ -23,7 +26,7 @@ services:
             - "@intaro_pinba.stopwatch"
 
     doctrine.dbal.logger:
-        class: "%intaro_pinba.dbal.logger.class%"
+        class: Intaro\PinbaBundle\Logger\DbalLogger
         public: false
         arguments:
             - "@intaro_pinba.stopwatch"
