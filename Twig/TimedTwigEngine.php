@@ -16,6 +16,10 @@ use Symfony\Bundle\TwigBundle\TwigEngine;
 use Symfony\Component\Config\FileLocatorInterface;
 use Symfony\Component\Templating\TemplateNameParserInterface;
 
+if (!class_exists(TwigEngine::class)) {
+    return;
+}
+
 /**
  * Times the time spent to render a template.
  */
