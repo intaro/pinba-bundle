@@ -22,7 +22,6 @@
         "symfony/error-handler": "^4.4|^5.0",
         "symfony/http-kernel": "^4.4|^5.0",
         "symfony/http-foundation": "^4.4|^5.0",
-        "symfony/yaml": "^4.4|^5.0",
         "symfony/deprecation-contracts": "^1.1|^2.0",
         "symfony/event-dispatcher-contracts": "^1.1|^2.0",
         "symfony/routing": "^4.4|^5.0",
