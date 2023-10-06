@@ -33,7 +33,7 @@ class BundleInitializationTest extends KernelTestCase
     public function testInitBundle(): void
     {
         self::bootKernel();
-        $container = self::$container;
+        $container = self::getContainer();
 
         $this->assertTrue($container->has(Stopwatch::class));
         $this->assertTrue($container->has('intaro_pinba.stopwatch'));
@@ -44,7 +44,7 @@ class BundleInitializationTest extends KernelTestCase
     public function testTwigRenderStopwatch(): void
     {
         self::bootKernel();
-        $container = self::$container;
+        $container = self::getContainer();
 
         $service = $container->get('twig');
         $this->assertInstanceOf(TimedTwigEnvironment::class, $service);
