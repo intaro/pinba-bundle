@@ -14,3 +14,4 @@ vendor
 .travis.yml
 
 .php_cs.cache
+.phpunit.result.cache
