@@ -112,3 +112,17 @@ doctrine:
                    type: service
                    id:   doctrine.result.memcache
 ```
+
+## Development ##
+
+### Run tests ###
+
+Install vendors:
+```shell
+make vendor
+```
+
+Run php-cs-fixer and phpunit:
+```shell
+make check
+```
