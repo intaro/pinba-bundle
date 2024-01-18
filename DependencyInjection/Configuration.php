@@ -20,9 +20,11 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder('intaro_pinba');
         if (\method_exists($treeBuilder, 'getRootNode')) {
             $rootNode = $treeBuilder->getRootNode();
-        } else {
+        } elseif (\method_exists($treeBuilder, 'root')) {
             // BC layer for symfony/config 4.1 and older
             $rootNode = $treeBuilder->root('intaro_pinba');
+        } else {
+            throw new \RuntimeException('Unsupported symfony/config version');
         }
 
         $rootNode

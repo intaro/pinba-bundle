@@ -1,6 +1,6 @@
 {
     "name": "intaro/pinba-bundle",
-    "description": "Collects and sends execution time of Doctrine queries, Twig renders and Memcache requests as pinba timers to pinba server",
+    "description": "Collects and sends execution time of Doctrine queries, Twig renders and Redis requests as pinba timers to pinba server",
     "keywords": ["symfony", "pinba", "php"],
     "type": "symfony-bundle",
     "license": "MIT",
@@ -13,6 +13,7 @@
         "symfony/yaml": "^4.0|^5.0|^6.0"
     },
     "require-dev": {
+        "doctrine/dbal": "^2|^3|^4",
         "nyholm/symfony-bundle-test": "^2.0",
         "phpunit/phpunit": "^8.5|^9.5",
         "symfony/phpunit-bridge": "^5.0|^6.0",
@@ -27,6 +28,7 @@
         "symfony/routing": "^4.4|^5.0|^6.0",
         "symfony/finder": "^4.4|^5.0|^6.0",
         "symfony/filesystem": "^4.4|^5.0|^6.0",
+        "symfony/templating": "^4.4|^5.0|^6.0",
         "symfony/translation-contracts": "^1.1|^2.0",
         "symfony/var-exporter": "^4.4|^5.0|^6.0",
         "symfony/var-dumper": "^4.4|^5.0|^6.0",
@@ -34,7 +36,8 @@
         "friendsofphp/php-cs-fixer": "3.4",
         "twig/twig": "^v2.14 || ^3.0",
         "symfony/twig-bundle": "^4.4|^5.0|^6.0",
-        "symfony/twig-bridge": "^4.4|^5.0|^6.0"
+        "symfony/twig-bridge": "^4.4|^5.0|^6.0",
+        "phpstan/phpstan": "^1.10"
     },
     "autoload": {
         "psr-4": {
@@ -51,7 +54,6 @@
         "phpcs": [
             "vendor/bin/php-cs-fixer fix --dry-run --config=.php-cs-fixer.dist.php --using-cache=no --show-progress=none -v"
         ],
-        "docker-clean": "docker image rm $(docker image ls -qf reference=pinba-bundle-test)",
-        "docker": "docker build . -t pinba-bundle-test && docker image prune -f >/dev/null && docker run --rm pinba-bundle-test"
+        "phpstan": "vendor/bin/phpstan analyse --no-progress"
     }
 }

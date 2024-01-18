@@ -10,6 +10,7 @@ use Intaro\PinbaBundle\Twig\TimedTwigEnvironment;
 use Nyholm\BundleTest\TestKernel;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Bundle\TwigBundle\TwigBundle;
+use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 class BundleInitializationTest extends KernelTestCase
@@ -21,6 +22,7 @@ class BundleInitializationTest extends KernelTestCase
 
     protected static function createKernel(array $options = []): KernelInterface
     {
+        /** @var TestKernel $kernel */
         $kernel = parent::createKernel($options);
         $kernel->addTestBundle(IntaroPinbaBundle::class);
         $kernel->addTestBundle(FixtureBundle::class);
@@ -33,9 +35,9 @@ class BundleInitializationTest extends KernelTestCase
     public function testInitBundle(): void
     {
         self::bootKernel();
-        $symfony = self::getSymfonyVersion();
+        $symfonyVersion = self::getSymfonyVersion();
 
-        if (version_compare($symfony, '5.0.0') >= 0) {
+        if ($symfonyVersion >= 5) {
             $container = self::getContainer();
         } else {
             $container = self::$container;
@@ -50,9 +52,9 @@ class BundleInitializationTest extends KernelTestCase
     public function testTwigRenderStopwatch(): void
     {
         self::bootKernel();
-        $symfony = self::getSymfonyVersion();
+        $symfonyVersion = self::getSymfonyVersion();
 
-        if (version_compare($symfony, '5.0.0') >= 0) {
+        if ($symfonyVersion >= 5) {
             $container = self::getContainer();
         } else {
             $container = self::$container;
@@ -62,10 +64,11 @@ class BundleInitializationTest extends KernelTestCase
         $this->assertInstanceOf(TimedTwigEnvironment::class, $service);
     }
 
-    private static function getSymfonyVersion()
+    private static function getSymfonyVersion(): int
     {
+        /** @var Kernel $kernel */
         $kernel = self::bootKernel();
 
-        return $kernel::VERSION;
+        return $kernel::MAJOR_VERSION;
     }
 }

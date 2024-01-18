@@ -85,3 +85,6 @@ jobs:
 
       - name: "Run code-style check"
         run: composer phpcs
+
+      - name: "Run PHPStan check"
+        run: composer phpstan

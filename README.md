@@ -7,7 +7,7 @@ PinbaBundle is Symfony bundle for [pinba](http://pinba.org).
 
     Important! Include this bundle only in `prod` environment.
 
-It collects and sends times of execution for Doctrine queries, Twig renders and Memcache requests as pinba timers to pinba server. You can watch collected realtime metrics in [Intaro Pinboard](http://intaro.github.io/pinboard/). Example of output:
+It collects and sends times of execution for Doctrine queries, Twig renders and Redis requests as pinba timers to pinba server. You can watch collected realtime metrics in [Intaro Pinboard](http://intaro.github.io/pinboard/). Example of output:
 
 ![Pinba timers in Intaro Pinboard](http://intaro.github.io/pinboard/img/timers.png)
 
@@ -73,46 +73,6 @@ doctrine:
 
 Don't worry. This config enables pinba logger which collects only queries execution time but not logs them.
 
-### Collecting Memcache metrics ###
-
-PinbaBundle supplies Memcache wrapped class `Intaro\PinbaBundle\Cache\Memcache` which collects execution times of all memcache queries.
-
-Example of `app/config/config_prod.yml`:
-```yml
-services:
-    memcache.db:
-        class: Intaro\PinbaBundle\Cache\Memcache
-        calls:
-            - [ addServer, [ %memcache.host%, %memcache.port% ]]
-            - [ setStopwatch, [ @intaro_pinba.stopwatch ]]
-    doctrine.metadata.memcache:
-        class: Doctrine\Common\Cache\MemcacheCache
-        calls:
-            - [ setMemcache, [ @memcache.db ]]
-    doctrine.query.memcache:
-        class: Doctrine\Common\Cache\MemcacheCache
-        calls:
-            - [ setMemcache, [ @memcache.db ]]
-    doctrine.result.memcache:
-        class: Doctrine\Common\Cache\MemcacheCache
-        calls:
-            - [ setMemcache, [ @memcache.db ]]
-
-doctrine:
-   orm:
-       entity_managers:
-           default:
-               metadata_cache_driver:
-                   type: service
-                   id:   doctrine.metadata.memcache
-               query_cache_driver:
-                   type: service
-                   id:   doctrine.query.memcache
-               result_cache_driver:
-                   type: service
-                   id:   doctrine.result.memcache
-```
-
 ## Development ##
 
 ### Run tests ###
@@ -122,7 +82,7 @@ Install vendors:
 make vendor
 ```
 
-Run php-cs-fixer and phpunit:
+Run php-cs-fixer, phpstan and phpunit:
 ```shell
 make check
 ```

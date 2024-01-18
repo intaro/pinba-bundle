@@ -11,8 +11,6 @@ class IntaroPinbaBundle extends Bundle
 {
     public function build(ContainerBuilder $container)
     {
-        if(Kernel::MAJOR_VERSION >= 3) {
-            $container->addCompilerPass(new TwigPass());
-        }
+        $container->addCompilerPass(new TwigPass());
     }
 }
