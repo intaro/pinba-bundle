@@ -43,6 +43,7 @@ jobs:
           with:
             tools: flex
             php-version: "${{ matrix.php-version }}"
+            extensions: redis-5.3.7
             coverage: "${{ matrix.coverage }}"
 
       -   name: "Install dependencies"
