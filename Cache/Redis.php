@@ -132,13 +132,13 @@ class Redis extends \Redis
         return $result;
     }
 
-    public function expire($key, $expire)
+    public function expire($key, $expire, $mode = null)
     {
         if ($this->stopwatch) {
             $e = $this->getStopwatchEvent('expire');
         }
 
-        $result = parent::expire($key, $expire);
+        $result = parent::expire($key, $expire, $mode);
 
         if ($this->stopwatch) {
             $e->stop();
@@ -192,13 +192,13 @@ class Redis extends \Redis
         return $result;
     }
 
-    public function sAdd($tag, $id)
+    public function sAdd($tag, $id, ...$other_values)
     {
         if ($this->stopwatch) {
             $e = $this->getStopwatchEvent('sAdd');
         }
 
-        $result = parent::sAdd($tag, $id);
+        $result = parent::sAdd($tag, $id, ...$other_values);
 
         if ($this->stopwatch) {
             $e->stop();

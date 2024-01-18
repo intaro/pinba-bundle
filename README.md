@@ -82,7 +82,7 @@ Install vendors:
 make vendor
 ```
 
-Run php-cs-fixer and phpunit:
+Run php-cs-fixer, phpstan and phpunit:
 ```shell
 make check
 ```

@@ -37,6 +37,7 @@ class TimedTwigEngine extends TwigEngine
      */
     public function __construct(\Twig\Environment $environment, TemplateNameParserInterface $parser, FileLocatorInterface $locator, Stopwatch $stopwatch)
     {
+        /* @phpstan-ignore-next-line */
         parent::__construct($environment, $parser, $locator);
 
         $this->stopwatch = $stopwatch;
@@ -53,6 +54,7 @@ class TimedTwigEngine extends TwigEngine
             'twig_template' => (string) $name,
         ]);
 
+        /* @phpstan-ignore-next-line */
         $ret = parent::render($name, $parameters);
 
         $e->stop();
