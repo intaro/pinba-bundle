@@ -15,16 +15,22 @@ jobs:
       matrix:
         php-version:
           - '7.4'
+          - '8.0'
           - '8.1'
+          - '8.2'
         symfony-version:
           - '4.4.*'
           - '5.4.*'
           - '6.2.*'
         exclude:
+          - php-version: '8.2'
+            symfony-version: '4.4.*'
+          - php-version: '8.2'
+            symfony-version: '5.4.*'
           - php-version: '8.1'
             symfony-version: '4.4.*'
-          - php-version: '8.1'
-            symfony-version: '5.4.*'
+          - php-version: '8.0'
+            symfony-version: '6.2.*'
           - php-version: '7.4'
             symfony-version: '6.2.*'
         coverage: [ 'none' ]
