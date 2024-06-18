@@ -1,10 +1,15 @@
 version: '3.4'
 
 services:
+    redis:
+        image: redis:3.2-alpine
+
     php:
         build:
             context: .
             args:
                 PHP_IMAGE_TAG: ${PHP_IMAGE_TAG:-7.4}
+        environment:
+            - REDIS_HOST=redis
         volumes:
             - "./:/opt/test"

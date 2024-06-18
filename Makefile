@@ -6,6 +6,12 @@ endif
 
 PHP_CONSOLE_DEPS=vendor
 
+up: docker-compose.yml
+	@docker compose up  -d --build --remove-orphans --quiet-pull
+
+stop:
+	@docker compose stop
+
 vendor: composer.json
 	@$(PHP) composer install -o -n --no-ansi
 	@touch vendor || true

@@ -9,6 +9,7 @@ class Redis extends \Redis
     protected $stopwatch;
     protected $stopwatchAdditionalTags = [];
     protected $serverName;
+    protected int $expireMethodArgumentsCount;
 
     public function addWatchedServer(
         $host,
@@ -18,6 +19,15 @@ class Redis extends \Redis
         $this->serverName = $host . (6379 == $port ? '' : ':' . $port);
 
         $this->pconnect($host, $port, $timeout);
+
+        // для совместимости с Redis 5
+        $expireMethodReflection = new \ReflectionMethod(\Redis::class, 'expire');
+        $this->expireMethodArgumentsCount = $expireMethodReflection->getNumberOfParameters();
+        if ($this->expireMethodArgumentsCount < 2 || $this->expireMethodArgumentsCount > 3) {
+            throw new \RuntimeException(
+                'Redis::expire method has wrong number of arguments ' . $this->expireMethodArgumentsCount . ' instead of 2 or 3'
+            );
+        }
     }
 
     public function setStopwatch(Stopwatch $stopwatch): void
@@ -138,7 +148,11 @@ class Redis extends \Redis
             $e = $this->getStopwatchEvent('expire');
         }
 
-        $result = parent::expire($key, $expire, $mode);
+        if (2 === $this->expireMethodArgumentsCount) {
+            $result = parent::expire($key, $expire);
+        } else {
+            $result = parent::expire($key, $expire, $mode);
+        }
 
         if ($this->stopwatch) {
             $e->stop();
