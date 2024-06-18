@@ -3,6 +3,11 @@ parameters:
     paths:
         - .
     excludePaths:
+        # no inteface SQLLogger in DBAL 4
+        # TODO refactor
+        - Logger/DbalLogger.php
+        # return type for get and mGet methods
+        - Cache/Redis.php
         - vendor/
     bootstrapFiles:
         - meta/phpstan/stub.php

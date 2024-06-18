@@ -17,5 +17,8 @@ class RedisTest extends TestCase
     public function testInit(): void
     {
         $redis = new Redis();
+        $redis->addWatchedServer($_ENV['REDIS_HOST'] ?? 'localhost');
+
+        $redis->expire('a', 1, null);
     }
 }
