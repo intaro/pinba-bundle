@@ -16,3 +16,6 @@ parameters:
         -
             message: '#Access to an undefined static property Intaro\\PinbaBundle\\Tests\\BundleInitializationTest\:\:\$container#'
             reportUnmatched: false
+        -
+            message: '#Method Doctrine\\DBAL\\Driver\\Middleware\\AbstractStatementMiddleware\:\:execute\(\) invoked with 1 parameter, 0 required#'
+            reportUnmatched: false
