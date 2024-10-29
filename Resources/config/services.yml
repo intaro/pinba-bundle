@@ -30,3 +30,10 @@ services:
         arguments:
             - "@intaro_pinba.stopwatch"
             - "%intaro_pinba.doctrine.database_host%"
+
+    Intaro\PinbaBundle\Doctrine\Middleware\LoggingMiddleware:
+        arguments:
+            $stopwatch: "@intaro_pinba.stopwatch"
+            $databaseHost: "%intaro_pinba.doctrine.database_host%"
+        tags:
+            - { name: doctrine.middleware }

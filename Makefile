@@ -20,7 +20,7 @@ phpcs: $(PHP_CONSOLE_DEPS)
 	@$(PHP) vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --using-cache=no -v
 
 phpstan: $(PHP_CONSOLE_DEPS)
-	@$(PHP) vendor/bin/phpstan analyse
+	@$(PHP) vendor/bin/phpstan analyse -v
 
 phpunit: $(PHP_CONSOLE_DEPS)
 	@$(PHP) vendor/bin/phpunit --color=always
