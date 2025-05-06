@@ -24,3 +24,24 @@ if (!function_exists('pinba_timer_add')) {
     {
     }
 }
+
+if (!function_exists('pinba_timers_get')) {
+    function pinba_timers_get(int $flag = 0): array
+    {
+        return [];
+    }
+}
+
+if (!function_exists('pinba_flush')) {
+    function pinba_flush(?string $scriptName = null, int $flags = 0): void
+    {
+    }
+}
+
+if (!defined('PINBA_ONLY_STOPPED_TIMERS')) {
+    define('PINBA_ONLY_STOPPED_TIMERS', 1);
+}
+
+if (!defined('PINBA_FLUSH_ONLY_STOPPED_TIMERS')) {
+    define('PINBA_FLUSH_ONLY_STOPPED_TIMERS', 1);
+}
