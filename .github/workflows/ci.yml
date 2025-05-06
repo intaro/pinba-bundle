@@ -9,7 +9,7 @@ on:
 
 jobs:
   tests:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     services:
       redis:
         image: redis:3.2-alpine
@@ -60,7 +60,7 @@ jobs:
           run: composer test
 
   static-analysis:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     name: "Static analysis"
     strategy:
       fail-fast: false
@@ -80,7 +80,7 @@ jobs:
           coverage: "none"
 
       - name: "Cache dependencies installed with composer"
-        uses: "actions/cache@v2"
+        uses: "actions/cache@v4"
         with:
           path: "~/.composer/cache"
           key: "php-${{ matrix.php-version }}-composer-locked-${{ hashFiles('composer.lock') }}"
