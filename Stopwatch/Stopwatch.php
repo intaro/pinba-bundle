@@ -74,7 +74,14 @@ class Stopwatch
     {
         $timersCount = count(pinba_timers_get(PINBA_ONLY_STOPPED_TIMERS));
         if ($timersCount >= self::FLUSH_TIMERS_LIMIT) {
-            pinba_flush(null, PINBA_FLUSH_ONLY_STOPPED_TIMERS);
+            pinba_flush($this->getScriptName(), PINBA_FLUSH_ONLY_STOPPED_TIMERS);
         }
+    }
+
+    private function getScriptName(): string
+    {
+        $pinbaInfo = pinba_get_info();
+
+        return $pinbaInfo['script_name'] ?? '';
     }
 }

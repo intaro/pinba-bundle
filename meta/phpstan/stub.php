@@ -33,7 +33,7 @@ if (!function_exists('pinba_timers_get')) {
 }
 
 if (!function_exists('pinba_flush')) {
-    function pinba_flush(?string $scriptName = null, int $flags = 0): void
+    function pinba_flush(string $scriptName = '', int $flags = 0): void
     {
     }
 }
