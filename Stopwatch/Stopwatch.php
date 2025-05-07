@@ -4,6 +4,8 @@ namespace Intaro\PinbaBundle\Stopwatch;
 
 class Stopwatch
 {
+    private const FLUSH_TIMERS_LIMIT = 1000;
+
     protected $enabled = false;
     protected $initTags = [];
 
@@ -29,7 +31,9 @@ class Stopwatch
             && function_exists('pinba_timer_stop')
             && function_exists('pinba_timer_add')
             && function_exists('pinba_get_info')
-            ;
+            && function_exists('pinba_timers_get')
+            && function_exists('pinba_flush')
+        ;
     }
 
     public function disable(): void
@@ -37,17 +41,21 @@ class Stopwatch
         $this->enabled = false;
     }
 
-    public function start(array $tags)
+    public function start(array $tags): StopwatchEvent
     {
-        if ($this->enabled) {
-            $tags = array_merge($this->initTags, $tags);
-            if (isset($tags['group']) && !isset($tags['category']) && false !== strpos($tags['group'], '::')) {
-                $v = explode('::', $tags['group']);
-                $tags['category'] = $v[0];
-            }
+        if (!$this->enabled) {
+            return new StopwatchEvent();
         }
 
-        return new StopwatchEvent($this->enabled ? pinba_timer_start($tags) : null);
+        $this->flushIfTimersLimitReached();
+
+        $tags = array_merge($this->initTags, $tags);
+        if (isset($tags['group']) && !isset($tags['category']) && false !== strpos($tags['group'], '::')) {
+            $v = explode('::', $tags['group']);
+            $tags['category'] = $v[0];
+        }
+
+        return new StopwatchEvent(pinba_timer_start($tags));
     }
 
     public function add(array $tags, $time): void
@@ -56,8 +64,17 @@ class Stopwatch
             return;
         }
 
-        $tags = array_merge($this->initTags, $tags);
+        $this->flushIfTimersLimitReached();
 
+        $tags = array_merge($this->initTags, $tags);
         pinba_timer_add($tags, $time);
+    }
+
+    private function flushIfTimersLimitReached(): void
+    {
+        $timersCount = count(pinba_timers_get(PINBA_ONLY_STOPPED_TIMERS));
+        if ($timersCount >= self::FLUSH_TIMERS_LIMIT) {
+            pinba_flush(null, PINBA_FLUSH_ONLY_STOPPED_TIMERS);
+        }
     }
 }
