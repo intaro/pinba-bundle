@@ -4,7 +4,7 @@ namespace Intaro\PinbaBundle\Stopwatch;
 
 class Stopwatch
 {
-    private const FLUSH_TIMERS_LIMIT = 1000;
+    private const FLUSH_TIMERS_LIMIT = 10000;
     private const RESPONSE_OK_CODE = 200;
 
     protected $enabled = false;
