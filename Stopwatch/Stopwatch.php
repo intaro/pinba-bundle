@@ -4,7 +4,8 @@ namespace Intaro\PinbaBundle\Stopwatch;
 
 class Stopwatch
 {
-    private const FLUSH_TIMERS_LIMIT = 1000;
+    private const FLUSH_TIMERS_LIMIT = 10000;
+    private const RESPONSE_OK_CODE = 200;
 
     protected $enabled = false;
     protected $initTags = [];
@@ -73,8 +74,19 @@ class Stopwatch
     private function flushIfTimersLimitReached(): void
     {
         $timersCount = count(pinba_timers_get(PINBA_ONLY_STOPPED_TIMERS));
-        if ($timersCount >= self::FLUSH_TIMERS_LIMIT) {
-            pinba_flush($this->getScriptName(), PINBA_FLUSH_ONLY_STOPPED_TIMERS);
+        if ($timersCount < self::FLUSH_TIMERS_LIMIT) {
+            return;
+        }
+
+        $originalCode = http_response_code();
+        $needReplaceCode = is_int($originalCode) && self::RESPONSE_OK_CODE !== $originalCode;
+
+        if ($needReplaceCode) {
+            http_response_code(self::RESPONSE_OK_CODE);
+        }
+        pinba_flush($this->getScriptName(), PINBA_FLUSH_ONLY_STOPPED_TIMERS);
+        if ($needReplaceCode) {
+            http_response_code($originalCode);
         }
     }
 
