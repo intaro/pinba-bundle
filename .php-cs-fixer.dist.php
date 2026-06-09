@@ -12,12 +12,18 @@ $finder = PhpCsFixer\Finder::create()
     ->in(__DIR__ . '/tests')
 ;
 
+if (PHP_VERSION_ID < 80000) {
+    $finder->notName('RedisPhp8.php');
+}
+
 $rules = [
     '@Symfony' => true,
     '@Symfony:risky' => true,
 
     // exceptions
     'single_line_throw' => false,
+    'modernize_strpos' => false,
+    'trailing_comma_in_multiline' => false,
 
     // php file
     'concat_space' => ['spacing' => 'one'],

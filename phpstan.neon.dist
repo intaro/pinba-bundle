@@ -8,7 +8,11 @@ parameters:
         - Logger/DbalLogger.php
         # return type for get and mGet methods
         - Cache/Redis.php
+        - Cache/RedisLegacy.php
+        - Cache/RedisPhp8.php
         - vendor/
+    scanFiles:
+        - meta/phpstan/redis.stub
     bootstrapFiles:
         - meta/phpstan/stub.php
     ignoreErrors:

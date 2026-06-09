@@ -19,16 +19,13 @@ class DbalLogger implements SQLLogger
      *
      * @param Stopwatch $stopwatch A Stopwatch instance
      */
-    public function __construct(Stopwatch $stopwatch = null, $host = null)
+    public function __construct(?Stopwatch $stopwatch = null, $host = null)
     {
         $this->stopwatch = $stopwatch;
         $this->databaseHost = $host;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function startQuery($sql, array $params = null, array $types = null): void
+    public function startQuery($sql, ?array $params = null, ?array $types = null): void
     {
         if (null !== $this->stopwatch) {
             $tags = [
@@ -45,9 +42,6 @@ class DbalLogger implements SQLLogger
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function stopQuery(): void
     {
         if (null !== $this->stopwatchEvent) {

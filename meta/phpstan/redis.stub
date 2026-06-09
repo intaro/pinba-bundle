@@ -1,0 +1,97 @@
+<?php
+
+namespace Intaro\PinbaBundle\Cache;
+
+class Redis
+{
+    public function addWatchedServer(
+        string $host,
+        int $port = 6379,
+        float $timeout = 5
+    ): void {
+    }
+
+    public function setStopwatch(object $stopwatch): void
+    {
+    }
+
+    /**
+     * @param array<string, mixed> $tags
+     */
+    public function setStopwatchTags(array $tags): void
+    {
+    }
+
+    public function get(string $key)
+    {
+    }
+
+    /**
+     * @param array<int, string> $keys
+     *
+     * @return \Redis|array<mixed>|false
+     */
+    public function mGet(array $keys)
+    {
+    }
+
+    public function exists($key, ...$otherKeys)
+    {
+    }
+
+    public function set(string $key, $value, $options = null)
+    {
+    }
+
+    public function setex(string $key, int $expire, $value)
+    {
+    }
+
+    /**
+     * @param array<string, mixed> $keyValues
+     */
+    public function mSetNx(array $keyValues)
+    {
+    }
+
+    public function expire(string $key, int $expire, ?string $mode = null)
+    {
+    }
+
+    /**
+     * @return \Redis|array<mixed>|false
+     */
+    public function exec()
+    {
+    }
+
+    /**
+     * @param array<int, string>|string $key
+     */
+    public function delete($key, string ...$otherKeys)
+    {
+    }
+
+    /**
+     * @return \Redis|array<mixed>|false
+     */
+    public function sMembers(string $key)
+    {
+    }
+
+    public function sAdd(string $key, $value, ...$otherValues)
+    {
+    }
+
+    public function multi($value = null)
+    {
+    }
+
+    public function select(int $dbindex)
+    {
+    }
+
+    public function flushDB($async = null)
+    {
+    }
+}

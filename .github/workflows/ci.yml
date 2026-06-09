@@ -51,6 +51,48 @@ jobs:
             extensions: redis-5.3.7
             coverage: "${{ matrix.coverage }}"
 
+      -   name: "Allow legacy Symfony branches in CI"
+          run: composer config audit.block-insecure false
+
+      -   name: "Install dependencies"
+          uses: ramsey/composer-install@v2
+          env:
+            SYMFONY_REQUIRE: "${{ matrix.symfony-version }}"
+
+      -   name: "Run tests"
+          run: composer test
+
+  current-tests:
+    runs-on: ubuntu-24.04
+    name: "Current tests"
+    services:
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version:
+          - '8.2'
+          - '8.3'
+          - '8.4'
+        symfony-version:
+          - '6.4.*'
+          - '7.4.*'
+        coverage: [ 'none' ]
+    steps:
+      -   name: "Checkout"
+          uses: "actions/checkout@v2"
+
+      -   name: "Install PHP"
+          uses: "shivammathur/setup-php@v2"
+          with:
+            tools: flex
+            php-version: "${{ matrix.php-version }}"
+            extensions: redis
+            coverage: "${{ matrix.coverage }}"
+
       -   name: "Install dependencies"
           uses: ramsey/composer-install@v2
           env:
@@ -69,6 +111,9 @@ jobs:
           - '7.4'
           - '8.0'
           - '8.1'
+          - '8.2'
+          - '8.3'
+          - '8.4'
     steps:
       - name: "Checkout"
         uses: "actions/checkout@v2"
@@ -77,6 +122,7 @@ jobs:
         uses: "shivammathur/setup-php@v2"
         with:
           php-version: ${{ matrix.php-version }}
+          tools: flex
           coverage: "none"
 
       - name: "Cache dependencies installed with composer"
@@ -85,6 +131,9 @@ jobs:
           path: "~/.composer/cache"
           key: "php-${{ matrix.php-version }}-composer-locked-${{ hashFiles('composer.lock') }}"
           restore-keys: "php-${{ matrix.php-version }}-composer-locked-"
+
+      - name: "Allow legacy Symfony branches in CI"
+        run: composer config audit.block-insecure false
 
       - name: "Install dependencies"
         uses: ramsey/composer-install@v2

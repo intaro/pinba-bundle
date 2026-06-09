@@ -43,9 +43,6 @@ class TimedTwigEngine extends TwigEngine
         $this->stopwatch = $stopwatch;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function render($name, array $parameters = [])
     {
         $e = $this->stopwatch->start([

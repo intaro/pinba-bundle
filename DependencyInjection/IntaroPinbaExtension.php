@@ -14,9 +14,6 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
  */
 class IntaroPinbaExtension extends Extension
 {
-    /**
-     * {@inheritDoc}
-     */
     public function load(array $configs, ContainerBuilder $container): void
     {
         $configuration = new Configuration();

@@ -33,8 +33,7 @@ class Stopwatch
             && function_exists('pinba_timer_add')
             && function_exists('pinba_get_info')
             && function_exists('pinba_timers_get')
-            && function_exists('pinba_flush')
-        ;
+            && function_exists('pinba_flush');
     }
 
     public function disable(): void

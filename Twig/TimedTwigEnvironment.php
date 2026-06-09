@@ -17,9 +17,6 @@ class TimedTwigEnvironment extends Environment
         $this->stopwatch = $stopwatch;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function render($name, array $context = []): string
     {
         if (null !== $this->stopwatch) {
